@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import AuthView from "../views/AuthView.vue";
+import MemberProfileView from "../views/MemberProfileView.vue";
+import MemberRestaurantsView from "../views/MemberRestaurantsView.vue";
+import MemberReservationView from "../views/MemberReservationView.vue";
+import RestaurantProfileView from "../views/RestaurantProfileView.vue";
 
 const routes = [
   {
@@ -8,13 +13,29 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/login",
+    name: "home",
+    component: AuthView,
+  },
+  {
+    path: "/memberprofile",
+    name: "MemberProfile",
+    component: MemberProfileView,
+  },
+  {
+    path: "/memberrestaurants",
+    name: "MemberRestaurants",
+    component: MemberRestaurantsView,
+  },
+  {
+    path: "/bookreservation",
+    name: "MemberReservation",
+    component: MemberReservationView,
+  },
+  {
+    path: "/restaurantprofile",
+    name: "RestaurantProfileView",
+    component: RestaurantProfileView,
   },
 ];
 
