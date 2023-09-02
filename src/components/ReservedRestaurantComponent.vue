@@ -4,23 +4,23 @@
     <p class="reservation-name">Restaurant Name :{{ name }}</p>
     <p class="reservation-date">Date :{{ date }}</p>
     <p class="reservation-seats">Seats :{{ seats }}</p>
-    <DelButtonView name="Delete" @button-clicked="DeleteReserved" />
+    <DelButtonComponent name="Delete" @button-clicked="DeleteReserved" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import DelButtonView from "@/components/DelButton.vue";
+import DelButtonComponent from "@/components/DelButtonComponent.vue";
 
 export default {
-  name: "ReservedRestaurant",
+  name: "ReservedRestaurantComponent",
   props: {
     name: String,
     date: String,
     seats: String,
   },
   components: {
-    DelButtonView,
+    DelButtonComponent,
   },
   methods: {
     DeleteReserved() {

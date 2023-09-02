@@ -1,32 +1,32 @@
 <template>
   <div class="member-profile-elements">
-    <MemberHeaderView />
-    <TitleView title="Member Profile" />
+    <MemberHeaderComponent />
+    <TitleComponent title="Member Profile" />
     <div v-for="res of resevedRestaurants" :key="res.date">
-      <ReservedRestaurant
+      <ReservedRestaurantComponent
         :name="res.name"
         :date="res.date"
         :seats="res.seats"
       />
     </div>
-    <FooterView />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TitleView from "@/components/Title.vue";
-import MemberHeaderView from "@/components/MemberHeaderView.vue";
-import ReservedRestaurant from "@/components/ReservedRestaurant.vue";
-import FooterView from "@/components/Footer.vue";
+import TitleComponent from "@/components/TitleComponent.vue";
+import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
+import ReservedRestaurantComponent from "@/components/ReservedRestaurantComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 
 export default {
   name: "MemberProfileView",
   components: {
-    TitleView,
-    MemberHeaderView,
-    ReservedRestaurant,
-    FooterView,
+    TitleComponent,
+    MemberHeaderComponent,
+    ReservedRestaurantComponent,
+    FooterComponent,
   },
   data: function () {
     return {

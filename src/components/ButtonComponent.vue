@@ -1,12 +1,10 @@
 <template>
-  <div class="del-button-element">
-    <button class="button" @click="handleButtonClick">{{ name }}</button>
-  </div>
+  <button class="button" @click="handleButtonClick">{{ name }}</button>
 </template>
 
 <script>
 export default {
-  name: "DelButtonView",
+  name: "ButtonComponent",
   props: {
     name: String,
   },
@@ -24,7 +22,7 @@ export default {
   width: fit-content;
   padding: 12px 30px;
   height: 40px;
-  background-color: red;
+  background-color: #57a957;
   border: none;
   border-radius: 4px;
   color: white;

@@ -1,17 +1,17 @@
 <template>
   <div class="restaurant-header-elements">
-    <ButtonView name="Sign Out" @button-clicked="handleLoginRedirect" />
+    <ButtonComponent name="Sign Out" @button-clicked="handleLoginRedirect" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ButtonView from "@/components/Button.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
-  name: "RestaurantHeaderView",
+  name: "RestaurantHeaderComponent",
   components: {
-    ButtonView,
+    ButtonComponent,
   },
   methods: {
     handleLoginRedirect() {

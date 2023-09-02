@@ -1,63 +1,52 @@
 <template>
   <div class="member-restaurants-elements">
-    <MemberHeaderView />
-    <TitleView title="Book Reservation" />
+    <MemberHeaderComponent />
+    <TitleComponent title="Book Reservation" />
     <h4>Restaurant Name : Restaurant1</h4>
     <h4>Seats Available : 12, 14</h4>
-    <ConfirmMessageView :content="confirmstatus" :status="status" />
+    <ConfirmMessageComponent :content="confirmstatus" :status="status" />
     <h4>Date</h4>
     <div class="select-reservation-date">
-      <div class="select-element">
-        <select name="format" id="format">
-          <option selected disabled>Choose a date</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
+      <div class="select-reservation-date-element">
+        <InputTitleComponent name="Choose a date" />
+        <SelectNumberComponent v-model="seat" :step="1" :maxnumber="31" />
       </div>
-      <div class="select-element">
-        <select name="format" id="format">
-          <option selected disabled>Choose a month</option>
-          <option value="1">Jan</option>
-          <option value="2">Feb</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-        </select>
+      <div class="select-reservation-month-element">
+        <InputTitleComponent name="Choose a month" />
+        <SelectNumberComponent v-model="seat" :step="1" :maxnumber="12" />
       </div>
     </div>
     <div class="reservation-now-actions">
-      <div class="select-element">
-        <select name="format" id="format">
-          <option selected disabled>Choose a Seat</option>
-          <option value="1">12</option>
-          <option value="2">15</option>
-        </select>
+      <div class="select-seat-element">
+        <InputTitleComponent name="Choose a seat" />
+        <SelectNumberComponent v-model="seat" :step="2" :maxnumber="100" />
       </div>
       <ButtonView name="Reserve Now" @button-clicked="handleReserveNow" />
     </div>
-    <FooterView />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TitleView from "@/components/Title.vue";
-import MemberHeaderView from "@/components/MemberHeaderView.vue";
-import ConfirmMessageView from "@/components/ConfirmMessage.vue";
-import FooterView from "@/components/Footer.vue";
-import ButtonView from "@/components/Button.vue";
+import TitleComponent from "@/components/TitleComponent.vue";
+import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
+import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+import ButtonView from "@/components/ButtonComponent.vue";
+import SelectNumberComponent from "@/components/SelectNumberComponent.vue";
+import InputTitleComponent from "@/components/InputTitleComponent.vue";
 
 export default {
   name: "MemberReservationView",
   components: {
-    TitleView,
-    MemberHeaderView,
-    ConfirmMessageView,
-    FooterView,
+    TitleComponent,
+    MemberHeaderComponent,
+    ConfirmMessageComponent,
+    FooterComponent,
     ButtonView,
+    SelectNumberComponent,
+    InputTitleComponent,
   },
   data: function () {
     return {
@@ -80,7 +69,7 @@ export default {
   margin: auto;
   max-width: 700px;
   justify-content: space-between;
-  margin-top: 5%;
+  align-items: end;
 }
 .reservation-now-actions .select-element {
   height: 2.5em;
@@ -90,6 +79,7 @@ export default {
   margin: auto;
   max-width: 500px;
   gap: 10px;
+  justify-content: space-around;
 }
 .member-restaurants-elements {
   margin-top: 0%;

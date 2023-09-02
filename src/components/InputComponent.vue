@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "InputView",
+  name: "InputComponent",
   props: {
     value: String,
   },

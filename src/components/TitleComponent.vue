@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "TitleView",
+  name: "TitleComponent",
   props: {
     title: String,
   },

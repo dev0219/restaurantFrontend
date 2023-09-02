@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "ConfirmMessageView",
+  name: "ConfirmMessageComponent",
   props: {
     content: String,
     status: Number,

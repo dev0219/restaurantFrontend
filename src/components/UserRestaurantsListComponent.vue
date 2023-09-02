@@ -2,7 +2,7 @@
   <div class="list-container">
     <div class="restaurant-list-elements">
       <div class="res-details" v-for="res of restaurants" :key="res.id">
-        <RestaurantDetails
+        <UserRestaurantDetailComponent
           :name="res.name"
           :categoryName="res.categoryName"
           :src="res.src"
@@ -11,21 +11,21 @@
       </div>
     </div>
     <div class="view-more-action">
-      <ButtonView name="View More Restaurants" />
+      <ButtonComponent name="View More Restaurants" />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import RestaurantDetails from "@/components/RestaurantDetails.vue";
-import ButtonView from "@/components/Button.vue";
+import UserRestaurantDetailComponent from "@/components/UserRestaurantDetailComponent.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
-  name: "RestaurantsList",
+  name: "UserRestaurantsListComponent",
   components: {
-    RestaurantDetails,
-    ButtonView,
+    UserRestaurantDetailComponent,
+    ButtonComponent,
   },
   data: function () {
     return {

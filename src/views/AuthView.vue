@@ -1,10 +1,10 @@
 <template>
   <div class="auth-elements">
-    <TitleView title="Login" />
-    <InputTitleView name="User Name" />
-    <InputView v-on:data="getValue" />
-    <ButtonView name="LOGIN" @button-clicked="handleLoginClick" />
-    <ConfirmMessageView
+    <TitleComponent title="Login" />
+    <InputTitleComponent name="User Name" />
+    <InputComponent v-on:data="getValue" />
+    <ButtonComponent name="LOGIN" @button-clicked="handleLoginClick" />
+    <ConfirmMessageComponent
       v-if="iscalled"
       :content="confirmstatus"
       :status="status"
@@ -14,20 +14,20 @@
 
 <script>
 // @ is an alias to /src
-import ButtonView from "@/components/Button.vue";
-import InputTitleView from "@/components/InputTitle.vue";
-import InputView from "@/components/Input.vue";
-import TitleView from "@/components/Title.vue";
-import ConfirmMessageView from "@/components/ConfirmMessage.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
+import InputTitleComponent from "@/components/InputTitleComponent.vue";
+import InputComponent from "@/components/InputComponent.vue";
+import TitleComponent from "@/components/TitleComponent.vue";
+import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
 
 export default {
   name: "AuthView",
   components: {
-    ButtonView,
-    InputTitleView,
-    TitleView,
-    InputView,
-    ConfirmMessageView,
+    ButtonComponent,
+    TitleComponent,
+    InputTitleComponent,
+    InputComponent,
+    ConfirmMessageComponent,
   },
   data: function () {
     return {

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "ScrollUp",
+  name: "ScrollUpComponent",
   props: {
     name: String,
   },

@@ -1,18 +1,24 @@
 <template>
   <div class="restaurant-profile-elements">
     <RestaurantHeaderComponent />
-    <TitleComponent title="Restaurant Profile" />
-    <div class="profile-delete">
-      <ButtonComponent
-        name="Create Restaurant"
-        @button-clicked="handleCreateRestaurant"
-      />
-      <DelButtonComponent
-        name="Profile Delete"
-        @button-clicked="handleDeleteProfile"
-      />
+    <TitleComponent title="New Restaurant" />
+    <InputTitleComponent name="Restaurant Name" />
+    <InputComponent v-on:data="getRestaurantName" />
+    <InputTitleComponent name="Category" />
+    <CategoryCheckBoxComponent
+      :buttons="categoryOptions"
+      v-model="selectedButtonValues"
+    />
+    <InputTitleComponent name="Seats Available" />
+    <SelectNumberComponent v-model="seat" :step="2" :maxnumber="100" />
+    <InputTitleComponent name="Days Open" />
+    <div class="days-open-element">
+      <div class="days-item" v-for="day of days" :key="day">{{ day }}</div>
     </div>
-    <UserRestaurantsListComponent />
+    <div class="restaurant-profile-actions">
+      <ButtonComponent name="Save" @button-clicked="handleUpdateProfile" />
+      <DelButtonComponent name="Clear" @button-clicked="handleClearProfile" />
+    </div>
     <FooterComponent />
   </div>
 </template>
@@ -20,21 +26,27 @@
 <script>
 // @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
+import InputTitleComponent from "@/components/InputTitleComponent.vue";
+import InputComponent from "@/components/InputComponent.vue";
 import RestaurantHeaderComponent from "@/components/RestaurantHeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
-import UserRestaurantsListComponent from "@/components/UserRestaurantsListComponent.vue";
 import DelButtonComponent from "@/components/DelButtonComponent.vue";
+import CategoryCheckBoxComponent from "@/components/CategoryCheckBoxComponent.vue";
+import SelectNumberComponent from "@/components/SelectNumberComponent.vue";
 
 export default {
-  name: "RestaurantProfileView",
+  name: "RestaurantCreateView",
   components: {
     TitleComponent,
     RestaurantHeaderComponent,
     FooterComponent,
-    UserRestaurantsListComponent,
+    InputComponent,
+    InputTitleComponent,
     ButtonComponent,
     DelButtonComponent,
+    CategoryCheckBoxComponent,
+    SelectNumberComponent,
   },
   data: function () {
     return {
@@ -55,8 +67,8 @@ export default {
     getRestaurantName(event) {
       this.restaurantName = event;
     },
-    handleCreateRestaurant() {
-      window.location.href = "/create-restaurant";
+    handleUpdateProfile() {
+      console.log("--- updating the profile");
     },
     handleClearProfile() {
       console.log("--- clearing the profile");
@@ -81,9 +93,7 @@ export default {
   justify-content: space-between;
 }
 .profile-delete {
-  display: flex;
-  margin: auto;
-  justify-content: space-around;
+  margin-top: 30px;
 }
 .days-open-element {
   max-width: 500px;

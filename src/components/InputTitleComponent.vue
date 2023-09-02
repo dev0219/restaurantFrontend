@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "InputTitleView",
+  name: "InputTitleComponent",
   props: {
     name: String,
   },
