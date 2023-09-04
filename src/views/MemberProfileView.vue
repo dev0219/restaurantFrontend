@@ -7,6 +7,8 @@
         :name="res.name"
         :date="res.date"
         :seats="res.seats"
+        :id="res._id"
+        v-on:delete-reserved="handleDelete"
       />
     </div>
     <FooterComponent />
@@ -19,7 +21,7 @@ import TitleComponent from "@/components/TitleComponent.vue";
 import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
 import ReservedRestaurantComponent from "@/components/ReservedRestaurantComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
-import { getAllRestaurnts } from "@/api/restaurant";
+import { getUserReservations, deleteReservation } from "@/api/reservation";
 import { useUserStore } from "@/store/user";
 import { useRouter } from "vue-router";
 
@@ -38,18 +40,23 @@ export default {
   },
   data: function () {
     return {
-      resevedRestaurants: [
-        { name: "test1", date: "2023-08-27", seats: "12,14" },
-        { name: "test2", date: "2023-08-28", seats: "15,17" },
-        { name: "test3", date: "2023-08-29", seats: "19,21" },
-      ],
+      resevedRestaurants: [],
     };
   },
   methods: {
     async getAllRestaurants() {
-      const allRestaurantLst = await getAllRestaurnts();
-      console.log("----restaurants in member");
-      console.log(allRestaurantLst);
+      let userobject = { userId: this.userInfo.userId };
+      const allRestaurantLst = await getUserReservations(userobject);
+      this.resevedRestaurants = allRestaurantLst.data.results.results;
+    },
+    async handleDelete(val) {
+      let deletedre = { _id: val };
+      if (confirm("Are you deleting this reservation?")) {
+        const is_deleted = await deleteReservation(deletedre);
+        if (is_deleted.data.result.status == 4) {
+          console.log("---deleted!");
+        }
+      }
     },
   },
   created() {

@@ -77,9 +77,9 @@ export default {
             this.userInfo.setUserId(loginResult.data.result.id);
             setTimeout(() => {
               if (loginResult.data.result.role == 2) {
-                window.location.href = "/restaurantprofile";
+                this.router.push({ name: "RestaurantProfileView" });
               } else {
-                window.location.href = "/memberprofile";
+                this.router.push({ name: "MemberProfile" });
               }
             }, 2000);
           }

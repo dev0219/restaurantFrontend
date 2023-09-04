@@ -31,7 +31,7 @@ export default {
       } else {
         this.activeButtons.splice(index, 1);
       }
-      this.$emit("input", this.activeButtons);
+      this.$emit("SelCategory", this.activeButtons);
     },
     isActiveButton(buttonValue) {
       return this.activeButtons.includes(buttonValue);

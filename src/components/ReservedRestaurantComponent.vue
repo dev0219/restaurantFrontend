@@ -18,14 +18,14 @@ export default {
     name: String,
     date: String,
     seats: String,
+    id: String,
   },
   components: {
     DelButtonComponent,
   },
   methods: {
     DeleteReserved() {
-      console.log("--- delete option");
-      // window.location.href = '/login';
+      this.$emit("delete-reserved", this.id);
     },
   },
 };

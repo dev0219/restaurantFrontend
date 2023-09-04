@@ -2,24 +2,51 @@
   <div class="member-restaurants-elements">
     <MemberHeaderComponent />
     <TitleComponent title="Book Reservation" />
-    <h4>Restaurant Name : Restaurant1</h4>
-    <h4>Seats Available : 12, 14</h4>
-    <ConfirmMessageComponent :content="confirmstatus" :status="status" />
+    <h4>Restaurant Name : {{ useRestaurantInfo.restaurant.name }}</h4>
+    <h4>Seats Available : {{ useRestaurantInfo.restaurant.seats }}</h4>
+    <div class="open-days">
+      <h4>Open Days</h4>
+      <div class="open-day-item">
+        <div v-for="item of useRestaurantInfo.restaurant.days" :key="item">
+          {{ item }}
+        </div>
+      </div>
+    </div>
+    <ConfirmMessageComponent
+      v-if="isCalled"
+      :content="confirmstatus"
+      :status="status"
+    />
     <h4>Date</h4>
     <div class="select-reservation-date">
       <div class="select-reservation-date-element">
         <InputTitleComponent name="Choose a date" />
-        <SelectNumberComponent :value="date" :step="1" :maxnumber="31" />
+        <SelectNumberComponent
+          v-on:SelectedNum="handleChoosedate"
+          :value="date"
+          :step="1"
+          :maxnumber="31"
+        />
       </div>
       <div class="select-reservation-month-element">
         <InputTitleComponent name="Choose a month" />
-        <SelectNumberComponent :value="month" :step="1" :maxnumber="12" />
+        <SelectNumberComponent
+          v-on:SelectedNum="handleChoosemonth"
+          :value="month"
+          :step="1"
+          :maxnumber="12"
+        />
       </div>
     </div>
     <div class="reservation-now-actions">
       <div class="select-seat-element">
         <InputTitleComponent name="Choose a seat" />
-        <SelectNumberComponent :value="seats" :step="2" :maxnumber="100" />
+        <SelectNumberComponent
+          v-on:SelectedNum="handleChooseseat"
+          :value="seats"
+          :step="2"
+          :maxnumber="useRestaurantInfo.restaurant.seats"
+        />
       </div>
       <ButtonView name="Reserve Now" @button-clicked="handleReserveNow" />
     </div>
@@ -40,6 +67,7 @@ import { useRestaurantStore } from "@/store/restaurant";
 import { useReservationStore } from "@/store/reservation";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
+import { createReservation } from "@/api/reservation";
 
 export default {
   name: "MemberReservationView",
@@ -61,8 +89,19 @@ export default {
   },
   data: function () {
     return {
+      isCalled: false,
       status: 1,
       date: 1,
+      dayNames: [
+        "sunday",
+        "monday",
+        "tuesday",
+        "wendnesday",
+        "thursday",
+        "friday",
+        "saturday",
+      ],
+      day: "",
       month: 1,
       seats: 2,
       confirmstatus:
@@ -70,13 +109,70 @@ export default {
     };
   },
   methods: {
-    handleReserveNow() {
+    async handleReserveNow() {
       console.log("--reserve now");
+      const currentDate = new Date();
+      const currentyear = currentDate.getFullYear();
+      const selected_bookdate = new Date(
+        currentyear + "-" + this.month + "-" + this.date
+      );
+      this.day = this.dayNames[selected_bookdate.getDay()];
+      let reservationObj = {
+        name: this.useRestaurantInfo.restaurant.name,
+        restaurantId: this.useRestaurantInfo.restaurant._id,
+        date: currentyear + "-" + this.month + "-" + this.date,
+        seats: this.seats,
+        userId: this.userInfo.userId,
+      };
+      if (this.useRestaurantInfo.restaurant.days.includes(this.day)) {
+        this.status = 1;
+        this.confirmstatus =
+          "Please confirm. Book Date : " +
+          currentyear +
+          "-" +
+          this.month +
+          "-" +
+          this.date +
+          ", Seats are " +
+          this.seats +
+          ".";
+        const is_created_reservation = await createReservation(reservationObj);
+        if (is_created_reservation.data.result.status == 2) {
+          this.confirmstatus = "Reserved a restaurant successfully!";
+          setTimeout(() => {
+            this.router.push({ name: "MemberProfile" });
+          }, 2000);
+        }
+      } else {
+        this.status = 2;
+        this.confirmstatus =
+          "The restaurant is not opening for the seleted date. Please try with another date.";
+      }
+      this.isCalled = true;
+    },
+    handleChoosedate(val) {
+      this.date = val;
+    },
+    handleChoosemonth(val) {
+      this.month = val;
+    },
+    handleChooseseat(val) {
+      this.seats = val;
+    },
+    getBookdata() {
+      const currentDate = new Date();
+      this.date = currentDate.getDate();
+      this.month = currentDate.getMonth() + 1;
+      const dayIndex = currentDate.getDay();
+      this.day = this.dayNames[dayIndex];
+      console.log("--- today is", this.day);
     },
   },
   created() {
     console.log("---reservation params------");
     console.log(this.useRestaurantInfo.restaurant);
+    console.log(this.userInfo.userId);
+    this.getBookdata();
   },
 };
 </script>
@@ -92,6 +188,26 @@ export default {
 .reservation-now-actions .select-element {
   height: 2.5em;
 }
+.open-day-item {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  justify-content: center;
+  gap: 10px;
+  div {
+    width: 100px;
+    height: 30px;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    border-radius: 5px;
+    background: pink;
+    font-weight: 600;
+  }
+}
+
 .select-reservation-date {
   display: flex;
   margin: auto;

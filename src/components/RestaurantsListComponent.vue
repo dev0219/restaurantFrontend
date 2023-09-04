@@ -2,7 +2,8 @@
   <div class="list-container">
     <CategorySelectComponent
       :buttons="categoryOptions"
-      v-model="selectedButton"
+      :value="selectedButton"
+      v-on:SelCategory="handleChangeCategories"
     />
     <div class="restaurant-list-elements">
       <div class="res-details" v-for="res of restaurants" :key="res.id">
@@ -47,7 +48,8 @@ export default {
   data: function () {
     return {
       restaurants: [],
-      selectedButton: "",
+      allRestaurants: [],
+      selectedButton: [],
       categoryOptions: [
         { label: "Italian Food", value: "Italian Food" },
         { label: "French Food", value: "French Food" },
@@ -63,6 +65,23 @@ export default {
       console.log(allRestaurantLst);
       if (allRestaurantLst.data.results.results.length) {
         this.restaurants = allRestaurantLst.data.results.results;
+        this.allRestaurants = allRestaurantLst.data.results.results;
+      }
+    },
+    handleChangeCategories(val) {
+      this.selectedButton = val;
+      if (this.selectedButton.length) {
+        this.restaurants = [];
+        for (var i = 0; i < this.allRestaurants.length; i++) {
+          let selected_restaurant = this.selectedButton.filter((item) =>
+            this.allRestaurants[i]["categories"].includes(item)
+          );
+          if (selected_restaurant.length) {
+            this.restaurants.push(this.allRestaurants[i]);
+          }
+        }
+      } else {
+        this.restaurants = this.allRestaurants;
       }
     },
   },
