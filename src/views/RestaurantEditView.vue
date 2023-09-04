@@ -1,9 +1,9 @@
 <template>
   <div class="restaurant-profile-elements">
     <RestaurantHeaderComponent />
-    <TitleComponent title="New Restaurant" />
+    <TitleComponent title="Edit Restaurant" />
     <InputTitleComponent name="Restaurant Name" />
-    <InputComponent v-on:data="getRestaurantName" />
+    <InputComponent :value="restaurantName" v-on:data="getRestaurantName" />
     <InputTitleComponent name="Please Upload the featured Restaurant Image" />
     <ImageUploaderComponent
       :src="imageValue"
@@ -34,7 +34,7 @@
       :status="status"
     />
     <div class="restaurant-profile-actions">
-      <ButtonComponent name="Save" @button-clicked="handleCreateRestaurant" />
+      <ButtonComponent name="Save" @button-clicked="handleUpdateRestaurant" />
     </div>
     <FooterComponent />
   </div>
@@ -53,12 +53,13 @@ import SelectNumberComponent from "@/components/SelectNumberComponent.vue";
 import DaysSelectComponent from "@/components/DaysSelectComponent.vue";
 import ImageUploaderComponent from "@/components/ImageUploaderComponent.vue";
 import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
-import { createRestaurnt } from "@/api/restaurant";
+import { EditRestaurnt } from "@/api/restaurant";
 import { useUserStore } from "@/store/user";
+import { useRestaurantStore } from "@/store/restaurant";
 import { useRouter } from "vue-router";
 
 export default {
-  name: "RestaurantCreateView",
+  name: "RestaurantEditView",
   components: {
     TitleComponent,
     RestaurantHeaderComponent,
@@ -74,8 +75,9 @@ export default {
   },
   setup() {
     const userInfo = useUserStore();
+    const restaurantInfo = useRestaurantStore();
     const router = useRouter();
-    return { userInfo, router };
+    return { userInfo, router, restaurantInfo };
   },
   data: function () {
     return {
@@ -94,7 +96,7 @@ export default {
       restaurantName: "",
       categories: [],
       userID: this.userInfo.userId,
-      imageValue: null,
+      imageValue: "",
       activeDays: [],
       seats: 2,
       categoryOptions: [
@@ -112,26 +114,27 @@ export default {
     getRestaurantName(event) {
       this.restaurantName = event;
     },
-    async handleCreateRestaurant() {
-      let newRestaurantObj = {
+    async handleUpdateRestaurant() {
+      let updateRestaurantObj = {
         name: this.restaurantName,
         restaurantImg: this.imageValue,
         categories: this.categories,
         seats: this.seats,
         days: this.activeDays,
         userId: this.userID,
+        _id: this.restaurantInfo.restaurant._id,
       };
       console.log("-- new restaurant");
-      console.log(newRestaurantObj);
+      console.log(updateRestaurantObj);
 
       try {
-        const is_created = await createRestaurnt(newRestaurantObj);
-        console.log("-- is created");
-        console.log(is_created);
+        const is_updated = await EditRestaurnt(updateRestaurantObj);
+        console.log("-- is updated");
+        console.log(is_updated);
         this.iscalled = false;
-        if (is_created.success && is_created.data.result.status == 2) {
+        if (is_updated.success && is_updated.data.result.status == 3) {
           this.iscalled = true;
-          this.confirmstatus = "Created a new Restaurant successfully!";
+          this.confirmstatus = "Updated a Restaurant successfully!";
           this.status = 1;
           setTimeout(() => {
             this.router.push({ name: "RestaurantProfileView" });
@@ -150,6 +153,18 @@ export default {
     getCategories(value) {
       this.categories = value;
     },
+    getRestaurantInfo() {
+      this.restaurantName = this.restaurantInfo.restaurant.name;
+      this.imageValue = this.restaurantInfo.restaurant.restaurantImg;
+      this.categories = this.restaurantInfo.restaurant.categories;
+      this.seats = this.restaurantInfo.restaurant.seats;
+      this.activeDays = this.restaurantInfo.restaurant.days;
+    },
+  },
+  created() {
+    console.log("---restaurant information in details");
+    console.log(this.restaurantInfo.restaurant);
+    this.getRestaurantInfo();
   },
 };
 </script>
@@ -159,6 +174,7 @@ export default {
   max-width: 400px;
   margin: auto;
   margin-top: 3%;
+  margin-bottom: 3%;
   display: flex;
   justify-content: center;
 }

@@ -7,15 +7,32 @@
 <script>
 // @ is an alias to /src
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import { singoutUser } from "@/api/auth";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   name: "RestaurantHeaderComponent",
   components: {
     ButtonComponent,
   },
+  setup() {
+    const userInfo = useUserStore();
+    const router = useRouter();
+    return { userInfo, router };
+  },
+  data: function () {
+    return {
+      userID: this.userInfo.userId,
+    };
+  },
   methods: {
-    handleLoginRedirect() {
-      window.location.href = "/login";
+    async handleLoginRedirect() {
+      let userobj = { id: this.userID };
+      const is_singout = await singoutUser(userobj);
+      if (is_singout.success) {
+        this.router.push({ name: "home" });
+      }
     },
   },
 };

@@ -19,6 +19,9 @@ import TitleComponent from "@/components/TitleComponent.vue";
 import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
 import ReservedRestaurantComponent from "@/components/ReservedRestaurantComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+import { getAllRestaurnts } from "@/api/restaurant";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   name: "MemberProfileView",
@@ -27,6 +30,11 @@ export default {
     MemberHeaderComponent,
     ReservedRestaurantComponent,
     FooterComponent,
+  },
+  setup() {
+    const userInfo = useUserStore();
+    const router = useRouter();
+    return { userInfo, router };
   },
   data: function () {
     return {
@@ -37,7 +45,16 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    async getAllRestaurants() {
+      const allRestaurantLst = await getAllRestaurnts();
+      console.log("----restaurants in member");
+      console.log(allRestaurantLst);
+    },
+  },
+  created() {
+    this.getAllRestaurants();
+  },
 };
 </script>
 

@@ -3,12 +3,7 @@
     <button class="min-btn" @click="decreaseValue" :disabled="localValue <= 1">
       -
     </button>
-    <input
-      type="number"
-      class="number-control"
-      :value="localValue"
-      @input="updateLocalValue($event)"
-    />
+    <input type="number" class="number-control" :value="localValue" disabled />
     <button
       class="max-btn"
       @click="increaseValue"
@@ -38,7 +33,7 @@ export default {
   },
   data() {
     return {
-      localValue: this.value || this.step,
+      localValue: this.value,
     };
   },
   methods: {
@@ -50,16 +45,12 @@ export default {
       this.localValue += this.step;
       this.emitUpdatedValue();
     },
-    updateLocalValue(event) {
-      const newValue = parseFloat(event.target.value);
-      if (!isNaN(newValue)) {
-        this.localValue = newValue;
-        this.emitUpdatedValue();
-      }
-    },
     emitUpdatedValue() {
-      this.$emit("input", this.localValue);
+      this.$emit("SelectedNum", this.localValue);
     },
+  },
+  created() {
+    console.log("----seats value", this.value);
   },
 };
 </script>

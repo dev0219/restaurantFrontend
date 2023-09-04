@@ -19,6 +19,9 @@ import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import InputComponent from "@/components/InputComponent.vue";
 import TitleComponent from "@/components/TitleComponent.vue";
 import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
+import { loginUser } from "@/api/auth";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   name: "AuthView",
@@ -29,6 +32,11 @@ export default {
     InputComponent,
     ConfirmMessageComponent,
   },
+  setup() {
+    const router = useRouter();
+    const userInfo = useUserStore();
+    return { userInfo, router };
+  },
   data: function () {
     return {
       confirmstatus: "checking",
@@ -38,22 +46,48 @@ export default {
     };
   },
   methods: {
-    handleLoginClick() {
-      // Handle the button click event here
-      console.log("LOGIN button clicked!", this.inputVal);
-      this.iscalled = true;
-      if (this.status == 1) {
-        this.confirmstatus = "Login Successfully!";
-        let username = this.inputVal.toLowerCase();
-        if (username.includes("restaurant")) {
-          window.location.href = "/restaurantprofile";
-        } else {
-          window.location.href = "/memberprofile";
+    async handleLoginClick() {
+      let username = this.inputVal.toLowerCase();
+      try {
+        const userdata = { username: username };
+        const loginResult = await loginUser(userdata);
+        console.log("-- login result---");
+        console.log(loginResult);
+        this.iscalled = true;
+        if (loginResult.success && loginResult.data) {
+          if (loginResult.data.result.status == 1) {
+            this.confirmstatus =
+              "Currently, someone logined with your username already.";
+            this.status = 2;
+          } else if (loginResult.data.result.status == 2) {
+            this.confirmstatus = "Login Successfully!";
+            this.status = 1;
+            console.log("--- success", loginResult.data.result.id);
+            this.userInfo.setUserId(loginResult.data.result.id);
+            setTimeout(() => {
+              if (loginResult.data.result.role == 2) {
+                this.router.push({ name: "RestaurantProfileView" });
+              } else {
+                this.router.push({ name: "MemberProfile" });
+              }
+            }, 2000);
+          } else if (loginResult.data.result.status == 3) {
+            this.confirmstatus = "You are new user in this system!";
+            this.status = 1;
+            this.userInfo.setUserId(loginResult.data.result.id);
+            setTimeout(() => {
+              if (loginResult.data.result.role == 2) {
+                window.location.href = "/restaurantprofile";
+              } else {
+                window.location.href = "/memberprofile";
+              }
+            }, 2000);
+          }
         }
-      } else {
-        this.confirmstatus = "Login Failed, please try again.";
+      } catch (error) {
+        this.iscalled = false;
+        console.error("Error login user:", error);
       }
-      // You can perform actions like sending API requests, updating data, etc.
     },
     getValue(event) {
       this.inputVal = event;

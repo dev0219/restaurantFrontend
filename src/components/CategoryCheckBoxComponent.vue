@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     handleCheckboxChange() {
-      this.$emit("input", this.selectedButtons);
+      this.$emit("CheckedCategory", this.selectedButtons);
     },
   },
 };

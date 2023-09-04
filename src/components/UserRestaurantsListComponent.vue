@@ -4,9 +4,13 @@
       <div class="res-details" v-for="res of restaurants" :key="res.id">
         <UserRestaurantDetailComponent
           :name="res.name"
-          :categoryName="res.categoryName"
-          :src="res.src"
-          :id="res.id"
+          :categoryName="res.categories"
+          :src="res.restaurantImg"
+          :id="res._id"
+          :userId="res.userId"
+          :days="res.days"
+          :seats="res.seats"
+          v-on:delete-restaurant="DeleteRestaurant"
         />
       </div>
     </div>
@@ -27,49 +31,19 @@ export default {
     UserRestaurantDetailComponent,
     ButtonComponent,
   },
+  props: {
+    restaruntArr: Array,
+  },
   data: function () {
     return {
-      restaurants: [
-        {
-          name: "restaurant1",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category1",
-          id: "1",
-        },
-        {
-          name: "restaurant2",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category2",
-          id: "2",
-        },
-        {
-          name: "restaurant3",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category3",
-          id: "3",
-        },
-        {
-          name: "restaurant4",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category4",
-          id: "4",
-        },
-        {
-          name: "restaurant5",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category5",
-          id: "5",
-        },
-        {
-          name: "restaurant6",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category6",
-          id: "6",
-        },
-      ],
+      restaurants: this.restaruntArr || [],
     };
   },
-  methods: {},
+  methods: {
+    DeleteRestaurant(val) {
+      this.$emit("delete-userRestaurant", val);
+    },
+  },
 };
 </script>
 
@@ -85,6 +59,7 @@ export default {
 }
 .res-details {
   border: 1px solid;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;

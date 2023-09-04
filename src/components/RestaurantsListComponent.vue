@@ -1,12 +1,19 @@
 <template>
   <div class="list-container">
+    <CategorySelectComponent
+      :buttons="categoryOptions"
+      v-model="selectedButton"
+    />
     <div class="restaurant-list-elements">
       <div class="res-details" v-for="res of restaurants" :key="res.id">
         <RestaurantDetailComponent
           :name="res.name"
-          :categoryName="res.categoryName"
-          :src="res.src"
-          :id="res.id"
+          :categoryName="res.categories"
+          :src="res.restaurantImg"
+          :id="res._id"
+          :userId="res.userId"
+          :days="res.days"
+          :seats="res.seats"
         />
       </div>
     </div>
@@ -20,56 +27,48 @@
 // @ is an alias to /src
 import RestaurantDetailComponent from "@/components/RestaurantDetailComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import CategorySelectComponent from "@/components/CategorySelectComponent.vue";
+import { getAllRestaurnts } from "@/api/restaurant";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   name: "RestaurantsListComponent",
   components: {
     RestaurantDetailComponent,
     ButtonComponent,
+    CategorySelectComponent,
+  },
+  setup() {
+    const userInfo = useUserStore();
+    const router = useRouter();
+    return { userInfo, router };
   },
   data: function () {
     return {
-      restaurants: [
-        {
-          name: "restaurant1",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category1",
-          id: "1",
-        },
-        {
-          name: "restaurant2",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category2",
-          id: "2",
-        },
-        {
-          name: "restaurant3",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category3",
-          id: "3",
-        },
-        {
-          name: "restaurant4",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category4",
-          id: "4",
-        },
-        {
-          name: "restaurant5",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category5",
-          id: "5",
-        },
-        {
-          name: "restaurant6",
-          src: "https://fastly.picsum.photos/id/797/200/200.jpg?hmac=-S9mzdkNyeh-FXTUE04cyqzvAV1W2D80OVQtTQHNt-k",
-          categoryName: "Category6",
-          id: "6",
-        },
+      restaurants: [],
+      selectedButton: "",
+      categoryOptions: [
+        { label: "Italian Food", value: "Italian Food" },
+        { label: "French Food", value: "French Food" },
+        { label: "Asian Food", value: "Asian Food" },
+        { label: "Eastern Food", value: "Eastern Food" },
       ],
     };
   },
-  methods: {},
+  methods: {
+    async getAllRestaurants() {
+      const allRestaurantLst = await getAllRestaurnts();
+      console.log("----restaurants in member");
+      console.log(allRestaurantLst);
+      if (allRestaurantLst.data.results.results.length) {
+        this.restaurants = allRestaurantLst.data.results.results;
+      }
+    },
+  },
+  created() {
+    this.getAllRestaurants();
+  },
 };
 </script>
 
