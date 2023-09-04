@@ -1,5 +1,10 @@
 <template>
   <div class="restaurant-profile-elements" :key="forceKey">
+    <DeleteConfirmComponent
+      v-if="is_deleting"
+      :content="deletecontent"
+      v-on:delete-action="handleDeleteConfirm"
+    />
     <RestaurantHeaderComponent />
     <TitleComponent title="Restaurant Profile" />
     <div class="profile-delete">
@@ -29,6 +34,7 @@ import FooterComponent from "@/components/FooterComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import UserRestaurantsListComponent from "@/components/UserRestaurantsListComponent.vue";
 import DelButtonComponent from "@/components/DelButtonComponent.vue";
+import DeleteConfirmComponent from "@/components/DeleteConfirmComponent.vue";
 import { getUserRestaurnts, deleteRestaurnt } from "@/api/restaurant";
 import { deletetProfile } from "@/api/auth";
 import { useUserStore } from "@/store/user";
@@ -43,6 +49,7 @@ export default {
     UserRestaurantsListComponent,
     ButtonComponent,
     DelButtonComponent,
+    DeleteConfirmComponent,
   },
   setup() {
     const userInfo = useUserStore();
@@ -55,16 +62,18 @@ export default {
       restaurantName: "",
       forceKey: 0,
       categoryName: "",
+      delete_restaurant_id: "",
       seat: 1,
+      is_deleting: false,
       categoryOptions: [
         { label: "Italian Food", value: "Italian Food" },
         { label: "French Food", value: "French Food" },
         { label: "Asian Food", value: "Asian Food" },
         { label: "Eastern Food", value: "Eastern Food" },
       ],
+      deletecontent: "Are you deleting this retaurant?",
       selectedButtonValues: [],
       restaurants: [],
-      userID: this.userInfo.userId,
     };
   },
   methods: {
@@ -74,35 +83,47 @@ export default {
     handleCreateRestaurant() {
       this.router.push({ name: "RestaurantCreateView" });
     },
-    async DeleteRestaurant(restaurantId) {
-      if (confirm("Are you deleting the restaurant?")) {
-        console.log("------id ", restaurantId);
-        let deleteObj = { _id: restaurantId };
-        let deleted_restaurant = await deleteRestaurnt(deleteObj);
-        if (deleted_restaurant.data.result.status == 4) {
-          alert("Deleted the restaurant successfully!");
-          this.getUserRestaurantsLst();
-          this.forceKey++;
+    DeleteRestaurant(restaurantId) {
+      this.is_deleting = true;
+      this.delete_restaurant_id = restaurantId;
+    },
+    async handleDeleteConfirm(val) {
+      if (val) {
+        if (this.delete_restaurant_id != "") {
+          let deleteObj = { _id: this.delete_restaurant_id };
+          let deleted_restaurant = await deleteRestaurnt(deleteObj);
+          if (deleted_restaurant.data.result.status == 4) {
+            this.is_deleting = false;
+            window.location.reload();
+          }
+        } else {
+          let deletedUser = { id: this.userInfo.userId };
+          const deleted_profile = await deletetProfile(deletedUser);
+          if (deleted_profile.data.result.status == 4) {
+            this.userInfo.setUserId("");
+            this.userInfo.setDeletedProfile(true);
+            localStorage.removeItem("userId");
+            this.router.push({ name: "home" });
+          }
         }
+      } else {
+        this.delete_restaurant_id = "";
+        this.is_deleting = false;
       }
     },
-    async handleDeleteProfile() {
-      if (confirm("Are you deleting the profile?")) {
-        let deletedUser = { id: this.userID };
-        const deleted_profile = await deletetProfile(deletedUser);
-        if (deleted_profile.data.result.status == 4) {
-          alert("Deleted the profile successfully!");
-        }
-        this.userInfo.setUserId("");
-        this.userInfo.setDeletedProfile(true);
-        this.router.push({ name: "home" });
-      }
+    handleDeleteProfile() {
+      this.is_deleting = true;
+      this.delete_restaurant_id = "";
+      this.deletecontent = "Are you deleting the profile?";
     },
     getCategoryName(event) {
       this.categoryName = event;
     },
     async getUserRestaurantsLst() {
-      let userobj = { userId: this.userID };
+      if (this.userInfo.userId == "") {
+        this.userInfo.setUserId(localStorage.getItem("userId"));
+      }
+      let userobj = { userId: this.userInfo.userId };
       const restaurantLst = await getUserRestaurnts(userobj);
       this.restaurants = restaurantLst.data.results.results;
     },

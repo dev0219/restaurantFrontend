@@ -31,6 +31,7 @@ export default {
       let userobj = { id: this.userID };
       const is_singout = await singoutUser(userobj);
       if (is_singout.success) {
+        localStorage.removeItem("userId");
         this.router.push({ name: "home" });
       }
     },

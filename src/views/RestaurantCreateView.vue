@@ -93,7 +93,6 @@ export default {
       status: 1,
       restaurantName: "",
       categories: [],
-      userID: this.userInfo.userId,
       imageValue: null,
       activeDays: [],
       seats: 2,
@@ -113,13 +112,16 @@ export default {
       this.restaurantName = event;
     },
     async handleCreateRestaurant() {
+      if (this.userInfo.userId == "") {
+        this.userInfo.setUserId(localStorage.getItem("userId"));
+      }
       let newRestaurantObj = {
         name: this.restaurantName,
         restaurantImg: this.imageValue,
         categories: this.categories,
         seats: this.seats,
         days: this.activeDays,
-        userId: this.userID,
+        userId: this.userInfo.userId,
       };
       console.log("-- new restaurant");
       console.log(newRestaurantObj);

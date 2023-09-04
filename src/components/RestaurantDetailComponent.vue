@@ -44,6 +44,7 @@ export default {
         days: this.days,
         userId: this.userId,
       };
+      localStorage.setItem("restaurantInfo", JSON.stringify(restaurantObj));
       this.useRestaurantInfo.setRestauratInfo(restaurantObj);
       this.router.push({ name: "MemberReservation" });
     },

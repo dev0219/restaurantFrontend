@@ -64,7 +64,6 @@ import ButtonView from "@/components/ButtonComponent.vue";
 import SelectNumberComponent from "@/components/SelectNumberComponent.vue";
 import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import { useRestaurantStore } from "@/store/restaurant";
-import { useReservationStore } from "@/store/reservation";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
 import { createReservation } from "@/api/reservation";
@@ -82,10 +81,9 @@ export default {
   },
   setup() {
     const useRestaurantInfo = useRestaurantStore();
-    const userReservationInfo = useReservationStore();
     const router = useRouter();
     const userInfo = useUserStore();
-    return { useRestaurantInfo, router, userInfo, userReservationInfo };
+    return { useRestaurantInfo, router, userInfo };
   },
   data: function () {
     return {
@@ -117,6 +115,9 @@ export default {
         currentyear + "-" + this.month + "-" + this.date
       );
       this.day = this.dayNames[selected_bookdate.getDay()];
+      if (this.userInfo.userId == "") {
+        this.userInfo.setUserId(localStorage.getItem("userId"));
+      }
       let reservationObj = {
         name: this.useRestaurantInfo.restaurant.name,
         restaurantId: this.useRestaurantInfo.restaurant._id,
@@ -165,13 +166,18 @@ export default {
       this.month = currentDate.getMonth() + 1;
       const dayIndex = currentDate.getDay();
       this.day = this.dayNames[dayIndex];
-      console.log("--- today is", this.day);
+      if (
+        this.useRestaurantInfo.restaurant.name == "" ||
+        this.useRestaurantInfo.restaurant.restaurantImg == ""
+      ) {
+        let getRetaurantInfo = JSON.parse(
+          localStorage.getItem("restaurantInfo")
+        );
+        this.useRestaurantInfo.setRestauratInfo(getRetaurantInfo);
+      }
     },
   },
   created() {
-    console.log("---reservation params------");
-    console.log(this.useRestaurantInfo.restaurant);
-    console.log(this.userInfo.userId);
     this.getBookdata();
   },
 };

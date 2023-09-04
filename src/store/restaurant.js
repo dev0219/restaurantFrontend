@@ -11,7 +11,6 @@ export const useRestaurantStore = defineStore("restaurantInfo", {
       days: [],
       userId: "",
     },
-    reserveId: "",
   }),
   getters: {
     getRestaurantId: (state) => state.restaurant,
@@ -20,9 +19,6 @@ export const useRestaurantStore = defineStore("restaurantInfo", {
     setRestauratInfo(restaurant) {
       console.log("---- this is calling?", restaurant);
       this.restaurant = restaurant;
-    },
-    setReserveId(id) {
-      this.reserveId = id;
     },
   },
 });

@@ -62,8 +62,8 @@ export default {
           } else if (loginResult.data.result.status == 2) {
             this.confirmstatus = "Login Successfully!";
             this.status = 1;
-            console.log("--- success", loginResult.data.result.id);
             this.userInfo.setUserId(loginResult.data.result.id);
+            localStorage.setItem("userId", loginResult.data.result.id);
             setTimeout(() => {
               if (loginResult.data.result.role == 2) {
                 this.router.push({ name: "RestaurantProfileView" });
@@ -75,6 +75,7 @@ export default {
             this.confirmstatus = "You are new user in this system!";
             this.status = 1;
             this.userInfo.setUserId(loginResult.data.result.id);
+            localStorage.setItem("userId", loginResult.data.result.id);
             setTimeout(() => {
               if (loginResult.data.result.role == 2) {
                 this.router.push({ name: "RestaurantProfileView" });

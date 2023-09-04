@@ -58,12 +58,12 @@ export default {
         days: this.days,
         userId: this.userId,
       };
+      localStorage.setItem("restaurantInfo", JSON.stringify(restaurantObj));
       this.useRestaurantInfo.setRestauratInfo(restaurantObj);
       this.router.push({ name: "RestaurantEditView" });
     },
     Delete() {
       this.$emit("delete-restaurant", this.id);
-      // window.location.href = "/bookreservation";
     },
   },
 };

@@ -75,9 +75,9 @@ export default {
   },
   setup() {
     const userInfo = useUserStore();
-    const restaurantInfo = useRestaurantStore();
+    const useRestaurantInfo = useRestaurantStore();
     const router = useRouter();
-    return { userInfo, router, restaurantInfo };
+    return { userInfo, router, useRestaurantInfo };
   },
   data: function () {
     return {
@@ -95,7 +95,6 @@ export default {
       status: 1,
       restaurantName: "",
       categories: [],
-      userID: this.userInfo.userId,
       imageValue: "",
       activeDays: [],
       seats: 2,
@@ -115,14 +114,17 @@ export default {
       this.restaurantName = event;
     },
     async handleUpdateRestaurant() {
+      if (this.userInfo.userId == "") {
+        this.userInfo.setUserId(localStorage.getItem("userId"));
+      }
       let updateRestaurantObj = {
         name: this.restaurantName,
         restaurantImg: this.imageValue,
         categories: this.categories,
         seats: this.seats,
         days: this.activeDays,
-        userId: this.userID,
-        _id: this.restaurantInfo.restaurant._id,
+        userId: this.userInfo.userId,
+        _id: this.useRestaurantInfo.restaurant._id,
       };
       console.log("-- new restaurant");
       console.log(updateRestaurantObj);
@@ -154,16 +156,23 @@ export default {
       this.categories = value;
     },
     getRestaurantInfo() {
-      this.restaurantName = this.restaurantInfo.restaurant.name;
-      this.imageValue = this.restaurantInfo.restaurant.restaurantImg;
-      this.categories = this.restaurantInfo.restaurant.categories;
-      this.seats = this.restaurantInfo.restaurant.seats;
-      this.activeDays = this.restaurantInfo.restaurant.days;
+      if (
+        this.useRestaurantInfo.restaurant.name == "" ||
+        this.useRestaurantInfo.restaurant.restaurantImg == ""
+      ) {
+        let getRetaurantInfo = JSON.parse(
+          localStorage.getItem("restaurantInfo")
+        );
+        this.useRestaurantInfo.setRestauratInfo(getRetaurantInfo);
+      }
+      this.restaurantName = this.useRestaurantInfo.restaurant.name;
+      this.imageValue = this.useRestaurantInfo.restaurant.restaurantImg;
+      this.categories = this.useRestaurantInfo.restaurant.categories;
+      this.seats = this.useRestaurantInfo.restaurant.seats;
+      this.activeDays = this.useRestaurantInfo.restaurant.days;
     },
   },
   created() {
-    console.log("---restaurant information in details");
-    console.log(this.restaurantInfo.restaurant);
     this.getRestaurantInfo();
   },
 };
