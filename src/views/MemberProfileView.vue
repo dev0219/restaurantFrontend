@@ -76,7 +76,7 @@ export default {
       }
     },
     handleDelete(val) {
-      this.is_deleting = false;
+      this.is_deleting = true;
       this.deleting_reserve_id = val;
     },
   },
