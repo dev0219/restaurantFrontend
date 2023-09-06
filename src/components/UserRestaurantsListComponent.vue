@@ -14,22 +14,19 @@
         />
       </div>
     </div>
-    <div class="view-more-action">
-      <ButtonComponent name="View More Restaurants" />
-    </div>
+    <ScrollUpComponent />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import UserRestaurantDetailComponent from "@/components/UserRestaurantDetailComponent.vue";
-import ButtonComponent from "@/components/ButtonComponent.vue";
+import ScrollUpComponent from "@/components/ScrollUpComponent.vue";
 
 export default {
   name: "UserRestaurantsListComponent",
   components: {
     UserRestaurantDetailComponent,
-    ButtonComponent,
+    ScrollUpComponent,
   },
   props: {
     restaruntArr: Array,
@@ -48,30 +45,43 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.restaurant-list-elements {
-  margin-top: 2% !important;
-  max-width: 1200px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin: auto;
+.list-container {
+  margin-top: 8%;
+  padding-bottom: 40px;
+  .restaurant-list-elements {
+    margin-top: 2% !important;
+    max-width: 1200px;
+    width: 90%;
+    display: grid;
+    gap: 40px;
+    margin: auto;
+  }
+  .res-details {
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .restaurant-list-elements .button {
+    margin: auto;
+  }
+  .restaurant-list-elements .title-element {
+    margin-top: 2%;
+  }
+  .view-more-action {
+    margin: 3%;
+  }
 }
-.res-details {
-  border: 1px solid;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-.restaurant-list-elements .button {
-  margin: auto;
-}
-.restaurant-list-elements .title-element {
-  margin-top: 2%;
-}
-.view-more-action {
-  margin: 3%;
+// @media (min-width: 576px) {
+//   .restaurant-list-elements {
+//     grid-template-columns: repeat(2, 1fr);
+//   }
+// }
+
+@media (min-width: 1200px) {
+  .restaurant-list-elements {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

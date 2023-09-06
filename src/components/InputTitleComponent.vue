@@ -14,4 +14,17 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@media (min-width: 576px) {
+  h3 {
+    font-family: Electrolize, sans serif;
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 576px) {
+  h3 {
+    font-size: 44px;
+  }
+}
+</style>

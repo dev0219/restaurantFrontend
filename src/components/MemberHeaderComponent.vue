@@ -10,7 +10,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import { singoutUser } from "@/api/auth";
 import { useUserStore } from "@/store/user";
@@ -54,18 +53,29 @@ export default {
 .member-header-elements {
   display: flex;
   justify-content: space-around;
-  max-width: 700px;
-  margin: auto;
+  max-width: 1800px;
+  background-color: rgb(63, 63, 63);
+  margin: -8px -18px;
 
   .button {
     background: transparent;
-    color: blue;
-    text-decoration: underline;
-    font-size: 18px;
+    color: white;
+    font-size: 13.75px;
+
+    &:hover {
+      color: #57a957;
+      text-decoration: underline;
+    }
   }
 }
 
 .auth-elements .confirm-element {
   margin-top: 20px;
+}
+
+@media (min-width: 576px) {
+  .button {
+    font-size: 18px !important;
+  }
 }
 </style>

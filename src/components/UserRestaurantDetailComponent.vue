@@ -14,14 +14,13 @@
       </button>
     </div>
     <div class="restaurant-actions">
-      <ButtonComponent name="Edit" @button-clicked="Edit" />
-      <DelButtonComponent name="Delete" @button-clicked="Delete" />
+      <ButtonComponent name="EDIT" @button-clicked="Edit" />
+      <DelButtonComponent name="DELETE" @button-clicked="Delete" />
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import DelButtonComponent from "@/components/DelButtonComponent.vue";
 import { useRestaurantStore } from "@/store/restaurant";
@@ -79,8 +78,9 @@ export default {
 .restaurant-details-elements {
   width: 300px;
   margin: auto;
-  text-align: initial;
   margin-top: 2%;
+  display: grid;
+  place-items: center;
 }
 
 .category-item {
@@ -97,6 +97,8 @@ export default {
 
 .categories {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 4px;
   margin-top: 20px;
   margin-bottom: 10px;

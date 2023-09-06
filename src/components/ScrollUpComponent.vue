@@ -48,16 +48,23 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .scroll-button {
-  width: 40px;
+  width: 35px;
   border: 1px solid;
   border-radius: 40px;
-  height: 40px;
+  height: 35px;
   background-color: #57a957;
-  color: white;
+  color: rgba(0, 0, 0, 0.668);
+  font-size: 18px;
   font-weight: 900;
   border-color: #57a957;
   position: fixed;
-  right: 20px;
+  right: 5px;
   bottom: 70px;
+  opacity: 0.65;
+
+  &:hover {
+    opacity: 0.45;
+    transform: scale(1.05);
+  }
 }
 </style>

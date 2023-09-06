@@ -47,24 +47,35 @@ export default {
 <style scoped lang="scss">
 .button-group {
   display: flex;
-  gap: 10px;
+  gap: 3.5px;
   margin: auto;
-  width: 600px;
+  width: 300px;
   margin-top: 30px;
   justify-content: center;
-}
 
-.button-group button {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  background-color: white;
-  cursor: pointer;
-  border-radius: 15px;
-}
+  button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 15px;
+    font-size: 15.5px;
+  }
 
-.button-group button.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+}
+@media (min-width: 576px) {
+  .button-group {
+    gap: 10px;
+    width: 600px;
+
+    button {
+      font-size: 24px;
+    }
+  }
 }
 </style>

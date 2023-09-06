@@ -34,7 +34,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .delete-confirm-element {
-  position: absolute;
+  // position: absolute;
   background: white;
   font-size: 14px;
   width: 300px;
@@ -42,22 +42,29 @@ export default {
   margin: auto;
   height: 150px;
   border-radius: 10px;
-  top: 5%;
-  justify-content: center;
-  align-items: center;
+  // top: 5%;
+  // justify-content: center;
+  // align-items: center;
   border: 1px solid;
   max-width: 400px;
   color: black;
-  left: 40%;
-}
-.delete-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.delete-content {
-  font-size: 20px;
-  font-weight: 600;
   margin-top: 10px;
+  // left: 40%;
+
+  .delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .delete-content {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+}
+@media (min-width: 576px) {
+  .delete-confirm-element {
+    width: 400px;
+  }
 }
 </style>

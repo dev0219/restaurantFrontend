@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
 import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
 import RestaurantsListComponent from "@/components/RestaurantsListComponent.vue";
@@ -48,8 +47,9 @@ export default {
 <style scoped lang="scss">
 .member-restaurants-elements {
   margin-top: 0%;
+  padding-bottom: 40px;
 }
 .member-restaurants-elements .title-element {
-  margin-top: 2%;
+  margin-top: 4%;
 }
 </style>

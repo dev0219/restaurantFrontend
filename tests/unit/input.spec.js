@@ -1,24 +1,24 @@
 import { mount } from "@vue/test-utils";
 import AuthView from "@/views/AuthView.vue";
 import RestaurantProfileView from "@/views/RestaurantProfileView.vue";
-import InputView from "@/components/Input.vue";
+import InputComponent from "@/components/InputComponent.vue";
 
 describe("AuthView", () => {
-  it("renders the InputView component", () => {
+  it("renders the InputComponent", () => {
     const wrapper = mount(AuthView);
 
-    // Find the InputView component within AuthView
-    const inputView = wrapper.findComponent(InputView);
+    // Find the InputComponent within AuthView
+    const inputView = wrapper.findComponent(InputComponent);
 
-    // Assert that InputView is rendered
+    // Assert that InputComponent is rendered
     expect(inputView.exists()).toBe(true);
   });
 
   it("emits data when input value changes", async () => {
     const wrapper = mount(AuthView);
 
-    // Find the InputView component within AuthView
-    const inputView = wrapper.findComponent(InputView);
+    // Find the InputComponent within AuthView
+    const inputView = wrapper.findComponent(InputComponent);
 
     // Simulate input value change
     const input = inputView.find("input");
@@ -30,6 +30,6 @@ describe("AuthView", () => {
 
   it("is displayed on RestaurantProfileView.vue", () => {
     const wrapper = mount(RestaurantProfileView);
-    expect(wrapper.findComponent(InputView).exists()).toBe(true);
+    expect(wrapper.findComponent(InputComponent).exists()).toBe(true);
   });
 });

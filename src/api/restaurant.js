@@ -1,8 +1,9 @@
-const apiUrl = "http://localhost:3000/api";
+// const apiUrl = "https://fluffy-garbanzo-g949pr65v763pwpj-3000.app.github.dev";
+const apiUrl = "http://localhost:3000";
 
 // Function to get restaurant data
 export async function createRestaurnt(newObj) {
-  const response = await fetch(`${apiUrl}/restaurant/create`, {
+  const response = await fetch(`${apiUrl}/api/restaurant/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -17,7 +18,7 @@ export async function createRestaurnt(newObj) {
 }
 
 export async function EditRestaurnt(newObj) {
-  const response = await fetch(`${apiUrl}/restaurant/update`, {
+  const response = await fetch(`${apiUrl}/api/restaurant/update`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -32,7 +33,7 @@ export async function EditRestaurnt(newObj) {
 }
 
 export async function getUserRestaurnts(userID) {
-  const response = await fetch(`${apiUrl}/restaurant/all`, {
+  const response = await fetch(`${apiUrl}/api/restaurant/all`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -47,7 +48,7 @@ export async function getUserRestaurnts(userID) {
 }
 
 export async function getAllRestaurnts() {
-  const response = await fetch(`${apiUrl}/restaurant/member/all`, {
+  const response = await fetch(`${apiUrl}/api/restaurant/member/all`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -61,7 +62,7 @@ export async function getAllRestaurnts() {
 }
 
 export async function deleteRestaurnt(delObj) {
-  const response = await fetch(`${apiUrl}/restaurant/delete`, {
+  const response = await fetch(`${apiUrl}/api/restaurant/delete`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json", // Specify the content type

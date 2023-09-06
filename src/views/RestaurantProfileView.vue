@@ -1,11 +1,11 @@
 <template>
   <div class="restaurant-profile-elements" :key="forceKey">
+    <RestaurantHeaderComponent />
     <DeleteConfirmComponent
       v-if="is_deleting"
       :content="deletecontent"
       v-on:delete-action="handleDeleteConfirm"
     />
-    <RestaurantHeaderComponent />
     <StoreConfirmComponent v-if="is_created" :Storecontent="Storecontent" />
     <TitleComponent title="Restaurant Profile" />
     <div class="profile-delete">
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
 import RestaurantHeaderComponent from "@/components/RestaurantHeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
@@ -39,8 +38,8 @@ import StoreConfirmComponent from "@/components/StoreConfirmComponent.vue";
 import DeleteConfirmComponent from "@/components/DeleteConfirmComponent.vue";
 import { getUserRestaurnts, deleteRestaurnt } from "@/api/restaurant";
 import { deletetProfile } from "@/api/auth";
-import { useUserStore } from "@/store/user";
 import { useRestaurantStore } from "@/store/restaurant";
+import { useUserStore } from "@/store/user";
 import { useRouter } from "vue-router";
 
 export default {
@@ -69,9 +68,9 @@ export default {
       categoryName: "",
       is_created: false,
       delete_restaurant_id: "",
+      Storecontent: "The restaurant was created successfully!",
       seat: 1,
       is_deleting: false,
-      Storecontent: "The restaurant was created successfully!",
       categoryOptions: [
         { label: "Italian Food", value: "Italian Food" },
         { label: "French Food", value: "French Food" },
@@ -164,7 +163,9 @@ export default {
 .profile-delete {
   display: flex;
   margin: auto;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 17px;
+  padding-top: 25px;
 }
 .days-open-element {
   max-width: 500px;
@@ -174,9 +175,10 @@ export default {
 }
 .member-profile-elements {
   margin-top: 0%;
-}
-.member-profile-elements .title-element {
-  margin-top: 2%;
+
+  .title-element {
+    margin-top: 2%;
+  }
 }
 .days-item {
   display: flex;
@@ -187,14 +189,20 @@ export default {
   border: 1px solid;
   background: pink;
   border-radius: 4px;
-}
 
-.days-item::hover {
-  background: white;
-  color: black;
+  &:hover {
+    background: white;
+    color: black;
+  }
 }
 
 .auth-elements .confirm-element {
   margin-top: 20px;
+}
+
+@media (min-width: 576px) {
+  .profile-delete {
+    gap: 40px;
+  }
 }
 </style>

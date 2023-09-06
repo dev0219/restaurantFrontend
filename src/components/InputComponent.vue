@@ -30,19 +30,30 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.input {
-  width: 300px;
-  border: 2px solid #aaa;
-  border-radius: 4px;
-  margin: 8px 0;
-  outline: none;
-  padding: 8px;
-  box-sizing: border-box;
-  transition: 0.3s;
+.input-element {
+  margin-top: -10px;
+
+  .input {
+    width: 300px;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 10px 0;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.3s;
+
+    &:focus {
+      border-color: #57a957;
+      box-shadow: 0 0 8px 0 #57a957;
+    }
+  }
 }
 
-.input:focus {
-  border-color: dodgerBlue;
-  box-shadow: 0 0 8px 0 dodgerBlue;
+@media (min-width: 576px) {
+  .input {
+    width: 450px;
+    font-size: 24px;
+  }
 }
 </style>

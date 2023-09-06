@@ -25,34 +25,25 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.confirm-element {
-  font-size: 14px;
-  width: 50%;
+.auth-elements {
+  padding: 2% 0;
+  width: 320px;
+  margin: 5px auto auto auto;
   border: 1px solid;
-  margin: auto;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  max-width: 400px;
-  margin-top: 20px;
-}
+  border-radius: 7px;
 
-.confirm.success {
-  /* Background for success status */
-  background-color: #a8e6cf;
-  color: grey;
-  padding: 10px;
-}
+  .button-element {
+    margin-top: 20px;
+  }
 
-.confirm.failure {
-  /* Background for failure status */
-  background-color: #f6b6b2;
-  color: red;
-  padding: 10px;
+  .confirm-element {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 576px) {
+  .auth-elements {
+    width: 500px;
+  }
 }
 </style>

@@ -1,8 +1,9 @@
-const apiUrl = "http://localhost:3000/api";
+// const apiUrl = "https://fluffy-garbanzo-g949pr65v763pwpj-3000.app.github.dev";
+const apiUrl = "http://localhost:3000";
 
 // Function to login user data
 export async function loginUser(username) {
-  const response = await fetch(`${apiUrl}/auth/login`, {
+  const response = await fetch(`${apiUrl}/api/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -17,7 +18,7 @@ export async function loginUser(username) {
 }
 
 export async function singoutUser(username) {
-  const response = await fetch(`${apiUrl}/auth/signout`, {
+  const response = await fetch(`${apiUrl}/api/auth/signout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -31,8 +32,8 @@ export async function singoutUser(username) {
   return response.json();
 }
 export async function deletetProfile(username) {
-  const response = await fetch(`${apiUrl}/auth/delete`, {
-    method: "POST",
+  const response = await fetch(`${apiUrl}/api/auth/delete`, {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json", // Specify the content type
       // You can add other headers here if needed, like authentication headers

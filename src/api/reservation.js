@@ -1,8 +1,9 @@
-const apiUrl = "http://localhost:3000/api";
+// const apiUrl = "https://fluffy-garbanzo-g949pr65v763pwpj-3000.app.github.dev";
+const apiUrl = "http://localhost:3000";
 
 // Function to get restaurant data
 export async function createReservation(newObj) {
-  const response = await fetch(`${apiUrl}/reservation/create`, {
+  const response = await fetch(`${apiUrl}/api/reservation/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -17,7 +18,7 @@ export async function createReservation(newObj) {
 }
 
 export async function checkReservation(newObj) {
-  const response = await fetch(`${apiUrl}/reservation/check`, {
+  const response = await fetch(`${apiUrl}/api/reservation/check`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -32,7 +33,7 @@ export async function checkReservation(newObj) {
 }
 
 export async function getUserReservations(userID) {
-  const response = await fetch(`${apiUrl}/reservation/all`, {
+  const response = await fetch(`${apiUrl}/api/reservation/all`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
@@ -47,7 +48,7 @@ export async function getUserReservations(userID) {
 }
 
 export async function deleteReservation(delObj) {
-  const response = await fetch(`${apiUrl}/reservation/delete`, {
+  const response = await fetch(`${apiUrl}/api/reservation/delete`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json", // Specify the content type

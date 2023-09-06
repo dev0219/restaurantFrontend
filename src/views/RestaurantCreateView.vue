@@ -29,14 +29,13 @@
       v-on:getDays="getAvailableDays"
     />
     <div class="restaurant-profile-actions">
-      <ButtonComponent name="Save" @button-clicked="handleCreateRestaurant" />
+      <ButtonComponent name="SAVE" @button-clicked="handleCreateRestaurant" />
     </div>
     <FooterComponent />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
 import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import InputComponent from "@/components/InputComponent.vue";
@@ -143,45 +142,66 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.restaurant-profile-actions {
-  max-width: 400px;
-  margin: auto;
-  margin-top: 3%;
-  display: flex;
-  justify-content: center;
-}
-.profile-delete {
-  margin-top: 30px;
-}
-.days-open-element {
-  max-width: 500px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-}
-.member-profile-elements {
-  margin-top: 0%;
-}
-.member-profile-elements .title-element {
-  margin-top: 2%;
-}
-.days-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid;
-  background: pink;
-  border-radius: 4px;
-}
+.restaurant-profile-elements {
+  padding-bottom: 50px;
 
-.days-item::hover {
-  background: white;
-  color: black;
-}
+  .restaurant-profile-actions {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 11%;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+  }
+  .profile-delete {
+    margin-top: 30px;
+  }
+  .days-open-element {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .member-profile-elements {
+    margin-top: 0%;
+    .title-element {
+      margin-top: 2%;
+    }
+  }
+  .days-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid;
+    background: pink;
+    border-radius: 4px;
 
-.auth-elements .confirm-element {
-  margin-top: 20px;
+    &:hover {
+      background: white;
+      color: black;
+    }
+  }
+
+  .days-item button.active {
+    background-color: #57a957;
+    color: black;
+    font-weight: bold;
+    border: 2px solid black;
+  }
+
+  .auth-elements .confirm-element {
+    margin-top: 20px;
+  }
+
+  // .profile-btn {
+  //   margin-top: 30px;
+  // }
+}
+@media (min-width: 576px) {
+  .restaurant-profile-actions {
+    margin-top: 5% !important;
+  }
 }
 </style>

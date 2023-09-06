@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import InputComponent from "@/components/InputComponent.vue";
@@ -100,17 +99,23 @@ export default {
 <style scoped lang="scss">
 .auth-elements {
   padding: 2% 0;
-  width: 400px;
+  width: 320px;
   margin: auto;
   border: 1px solid;
   margin-top: 10%;
   border-radius: 7px;
-}
-.auth-elements .button-element {
-  margin-top: 20px;
+  .button-element {
+    margin-top: 20px;
+  }
+
+  .confirm-element {
+    margin-top: 20px;
+  }
 }
 
-.auth-elements .confirm-element {
-  margin-top: 20px;
+@media (min-width: 576px) {
+  .auth-elements {
+    width: 80%;
+  }
 }
 </style>

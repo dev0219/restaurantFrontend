@@ -22,17 +22,32 @@ export default {
 <style scoped lang="scss">
 .button {
   width: fit-content;
-  padding: 12px 30px;
   height: 40px;
-  background-color: red;
+  background-color: rgb(231, 127, 127);
   border: none;
   border-radius: 4px;
   color: white;
   font-size: 17px;
   font-weight: 600;
-  border-color: #57a957;
+  cursor: pointer;
+  font-family: Archivo Narrow, sans-serif;
+  letter-spacing: 0.095em;
+
+  &:hover {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    top: 2px;
+  }
 }
-.button:active {
-  top: 2px;
+
+@media (min-width: 576px) {
+  .button {
+    padding: 18px 45px;
+    height: 60px;
+    font-size: 20px;
+  }
 }
 </style>

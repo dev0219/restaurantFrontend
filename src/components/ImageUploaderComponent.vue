@@ -51,9 +51,44 @@ export default {
   border: 1px solid;
   margin: auto;
   margin-top: 10px;
+
+  img {
+    max-width: 200px;
+    max-height: 200px;
+  }
 }
-.preview-div img {
-  max-width: 200px;
-  max-height: 200px;
+
+@media (min-width: 576px) {
+  .preview-div {
+    width: 400px;
+    height: 400px;
+
+    img {
+      max-width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  input {
+    width: 400px;
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .preview-div {
+    width: 500px;
+    height: 500px;
+
+    img {
+      max-width: 500px;
+      max-height: 500px;
+    }
+  }
+
+  input {
+    width: 500px;
+    font-size: 28px;
+  }
 }
 </style>

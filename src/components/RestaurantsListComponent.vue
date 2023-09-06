@@ -18,16 +18,11 @@
         />
       </div>
     </div>
-    <div class="view-more-action">
-      <ButtonComponent name="View More Restaurants" />
-    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import RestaurantDetailComponent from "@/components/RestaurantDetailComponent.vue";
-import ButtonComponent from "@/components/ButtonComponent.vue";
 import CategorySelectComponent from "@/components/CategorySelectComponent.vue";
 import { getAllRestaurnts } from "@/api/restaurant";
 import { useUserStore } from "@/store/user";
@@ -37,7 +32,6 @@ export default {
   name: "RestaurantsListComponent",
   components: {
     RestaurantDetailComponent,
-    ButtonComponent,
     CategorySelectComponent,
   },
   setup() {
@@ -93,11 +87,10 @@ export default {
 
 <style scoped lang="scss">
 .restaurant-list-elements {
-  margin-top: 2% !important;
+  margin-top: 8% !important;
   max-width: 1200px;
-  width: 100%;
+  width: 90%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   margin: auto;
 }
@@ -116,5 +109,17 @@ export default {
 }
 .view-more-action {
   margin: 3%;
+}
+
+@media (min-width: 768px) {
+  .restaurant-list-elements {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .restaurant-list-elements {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

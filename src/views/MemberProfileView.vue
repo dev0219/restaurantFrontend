@@ -22,12 +22,11 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
 import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
 import ReservedRestaurantComponent from "@/components/ReservedRestaurantComponent.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
 import DeleteConfirmComponent from "@/components/DeleteConfirmComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 import StoreConfirmComponent from "@/components/StoreConfirmComponent.vue";
 import { getUserReservations, deleteReservation } from "@/api/reservation";
 import { useRestaurantStore } from "@/store/restaurant";
@@ -103,12 +102,23 @@ export default {
 <style scoped lang="scss">
 .member-profile-elements {
   margin-top: 0%;
-}
-.member-profile-elements .title-element {
-  margin-top: 2%;
+  padding-bottom: 40px;
+  .title-element {
+    margin-top: 2%;
+  }
+
+  .confirm-element {
+    margin-top: 20px;
+  }
 }
 
-.auth-elements .confirm-element {
-  margin-top: 20px;
+@media (min-width: 576px) {
+  .member-profile-elements {
+    font-size: 26px;
+
+    .title-element {
+      font-size: 60px;
+    }
+  }
 }
 </style>

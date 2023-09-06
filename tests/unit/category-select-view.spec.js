@@ -1,21 +1,21 @@
 import { mount } from "@vue/test-utils";
-import CategorySelectView from "@/components/CategorySelectView.vue";
+import CategorySelectComponent from "@/components/CategorySelectComponent.vue";
 import MemberRestaurantsView from "@/views/MemberRestaurantsView.vue";
 
-describe("CategorySelectView.vue", () => {
-  it("displays CategorySelectView component", () => {
+describe("CategorySelectComponent.vue", () => {
+  it("displays CategorySelectComponent component", () => {
     const wrapper = mount(MemberRestaurantsView);
-    expect(wrapper.findComponent(CategorySelectView).exists()).toBe(true);
+    expect(wrapper.findComponent(CategorySelectComponent).exists()).toBe(true);
   });
 
   it("displays the options", () => {
-    const wrapper = mount(CategorySelectView);
+    const wrapper = mount(CategorySelectComponent);
     const options = wrapper.findAll(".container option");
     expect(options.length).toBe(5); // Number of options defined in data
   });
 
   it("toggles options when clicked", async () => {
-    const wrapper = mount(CategorySelectView);
+    const wrapper = mount(CategorySelectComponent);
     const options = wrapper.findAll(".container option");
 
     await options[0].trigger("click"); // Click on the first option
@@ -30,7 +30,7 @@ describe("CategorySelectView.vue", () => {
   });
 
   it('toggles "All Selected" option', async () => {
-    const wrapper = mount(CategorySelectView);
+    const wrapper = mount(CategorySelectComponent);
     const allSelectedOption = wrapper.find(
       '.container option[value="All Selected"]'
     );
@@ -48,7 +48,7 @@ describe("CategorySelectView.vue", () => {
   });
 
   it('clears selections when "Clear" icon is clicked', async () => {
-    const wrapper = mount(CategorySelectView);
+    const wrapper = mount(CategorySelectComponent);
     const options = wrapper.findAll(".container option");
 
     await options[0].trigger("click"); // Click on the first option

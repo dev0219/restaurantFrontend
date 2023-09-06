@@ -1,20 +1,20 @@
 import { mount } from "@vue/test-utils";
 import AuthView from "@/views/AuthView.vue";
 import MemberReservationView from "@/views/MemberReservationView.vue";
-import ConfirmMessage from "@/components/ConfirmMessage.vue";
+import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
 
 describe("AuthView", () => {
-  it("renders the ConfirmMessage component", () => {
+  it("renders the ConfirmMessageComponent component", () => {
     const wrapper = mount(AuthView);
 
-    // Assert that ConfirmMessage is rendered within AuthView
-    expect(wrapper.findComponent(ConfirmMessage).exists()).toBe(true);
+    // Assert that ConfirmMessageComponent is rendered within AuthView
+    expect(wrapper.findComponent(ConfirmMessageComponent).exists()).toBe(true);
   });
 });
 
-describe("ConfirmMessage", () => {
+describe("ConfirmMessageComponent", () => {
   it("computes the correct status class for success status", () => {
-    const wrapper = mount(ConfirmMessage, {
+    const wrapper = mount(ConfirmMessageComponent, {
       propsData: {
         content: "Test Content",
         status: 1,
@@ -25,7 +25,7 @@ describe("ConfirmMessage", () => {
   });
 
   it("computes the correct status class for failure status", () => {
-    const wrapper = mount(ConfirmMessage, {
+    const wrapper = mount(ConfirmMessageComponent, {
       propsData: {
         content: "Test Content",
         status: 2,
@@ -36,7 +36,7 @@ describe("ConfirmMessage", () => {
   });
 
   it("computes no additional status class for other status values", () => {
-    const wrapper = mount(ConfirmMessage, {
+    const wrapper = mount(ConfirmMessageComponent, {
       propsData: {
         content: "Test Content",
         status: 3,
@@ -46,25 +46,25 @@ describe("ConfirmMessage", () => {
     expect(wrapper.vm.statusClass).toBe("");
   });
 
-  it("displays ConfirmMessage component", () => {
+  it("displays ConfirmMessageComponent component", () => {
     // Mount the MemberReservationView component
     const wrapper = mount(MemberReservationView);
 
-    // Find the ConfirmMessage component within MemberReservationView
-    const confirmMessageComponent = wrapper.findComponent(ConfirmMessage);
+    // Find the ConfirmMessageComponent component within MemberReservationView
+    const confirmMessageComponent = wrapper.findComponent(ConfirmMessageComponent);
 
-    // Assert that ConfirmMessage component is present
+    // Assert that ConfirmMessageComponent component is present
     expect(confirmMessageComponent.exists()).toBe(true);
   });
 
-  it("displays ConfirmMessage component", () => {
+  it("displays ConfirmMessageComponent component", () => {
     // Mount the AuthView component
     const wrapper = mount(AuthView);
 
-    // Find the ConfirmMessage component within AuthView
-    const confirmMessageComponent = wrapper.findComponent(ConfirmMessage);
+    // Find the ConfirmMessageComponent component within AuthView
+    const confirmMessageComponent = wrapper.findComponent(ConfirmMessageComponent);
 
-    // Assert that ConfirmMessage component is present
+    // Assert that ConfirmMessageComponent component is present
     expect(confirmMessageComponent.exists()).toBe(true);
   });
 });

@@ -29,14 +29,13 @@
       v-on:getDays="getAvailableDays"
     />
     <div class="restaurant-profile-actions">
-      <ButtonComponent name="Save" @button-clicked="handleUpdateRestaurant" />
+      <ButtonComponent name="SAVE" @button-clicked="handleUpdateRestaurant" />
     </div>
     <FooterComponent />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import TitleComponent from "@/components/TitleComponent.vue";
 import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import InputComponent from "@/components/InputComponent.vue";
