@@ -6,6 +6,7 @@
       v-on:delete-action="handleDeleteConfirm"
     />
     <RestaurantHeaderComponent />
+    <StoreConfirmComponent v-if="is_created" :Storecontent="Storecontent" />
     <TitleComponent title="Restaurant Profile" />
     <div class="profile-delete">
       <ButtonComponent
@@ -34,10 +35,12 @@ import FooterComponent from "@/components/FooterComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import UserRestaurantsListComponent from "@/components/UserRestaurantsListComponent.vue";
 import DelButtonComponent from "@/components/DelButtonComponent.vue";
+import StoreConfirmComponent from "@/components/StoreConfirmComponent.vue";
 import DeleteConfirmComponent from "@/components/DeleteConfirmComponent.vue";
 import { getUserRestaurnts, deleteRestaurnt } from "@/api/restaurant";
 import { deletetProfile } from "@/api/auth";
 import { useUserStore } from "@/store/user";
+import { useRestaurantStore } from "@/store/restaurant";
 import { useRouter } from "vue-router";
 
 export default {
@@ -50,11 +53,13 @@ export default {
     ButtonComponent,
     DelButtonComponent,
     DeleteConfirmComponent,
+    StoreConfirmComponent,
   },
   setup() {
     const userInfo = useUserStore();
+    const useRestaurantInfo = useRestaurantStore();
     const router = useRouter();
-    return { userInfo, router };
+    return { userInfo, router, useRestaurantInfo };
   },
   data: function () {
     return {
@@ -62,9 +67,11 @@ export default {
       restaurantName: "",
       forceKey: 0,
       categoryName: "",
+      is_created: false,
       delete_restaurant_id: "",
       seat: 1,
       is_deleting: false,
+      Storecontent: "The restaurant was created successfully!",
       categoryOptions: [
         { label: "Italian Food", value: "Italian Food" },
         { label: "French Food", value: "French Food" },
@@ -130,6 +137,18 @@ export default {
   },
   created() {
     this.getUserRestaurantsLst();
+    if (this.useRestaurantInfo.storConfirm) {
+      if (this.useRestaurantInfo.is_created) {
+        this.Storecontent = "The restaurant was created successfully!";
+      } else {
+        this.Storecontent = "The restaurant was updated successfully!";
+      }
+      this.is_created = true;
+      setTimeout(() => {
+        this.is_created = false;
+        this.useRestaurantInfo.setStoreConfirm(false);
+      }, 3000);
+    }
   },
 };
 </script>

@@ -11,6 +11,8 @@ export const useRestaurantStore = defineStore("restaurantInfo", {
       days: [],
       userId: "",
     },
+    storConfirm: false,
+    is_created: false,
   }),
   getters: {
     getRestaurantId: (state) => state.restaurant,
@@ -19,6 +21,12 @@ export const useRestaurantStore = defineStore("restaurantInfo", {
     setRestauratInfo(restaurant) {
       console.log("---- this is calling?", restaurant);
       this.restaurant = restaurant;
+    },
+    setStoreConfirm(confirm) {
+      this.storConfirm = confirm;
+    },
+    setCreateConfirm(confirm) {
+      this.is_created = confirm;
     },
   },
 });

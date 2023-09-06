@@ -28,11 +28,6 @@
       :buttons="days"
       v-on:getDays="getAvailableDays"
     />
-    <ConfirmMessageComponent
-      v-if="iscalled"
-      :content="confirmstatus"
-      :status="status"
-    />
     <div class="restaurant-profile-actions">
       <ButtonComponent name="Save" @button-clicked="handleUpdateRestaurant" />
     </div>
@@ -52,7 +47,6 @@ import CategoryCheckBoxComponent from "@/components/CategoryCheckBoxComponent.vu
 import SelectNumberComponent from "@/components/SelectNumberComponent.vue";
 import DaysSelectComponent from "@/components/DaysSelectComponent.vue";
 import ImageUploaderComponent from "@/components/ImageUploaderComponent.vue";
-import ConfirmMessageComponent from "@/components/ConfirmMessageComponent.vue";
 import { EditRestaurnt } from "@/api/restaurant";
 import { useUserStore } from "@/store/user";
 import { useRestaurantStore } from "@/store/restaurant";
@@ -71,7 +65,6 @@ export default {
     SelectNumberComponent,
     DaysSelectComponent,
     ImageUploaderComponent,
-    ConfirmMessageComponent,
   },
   setup() {
     const userInfo = useUserStore();
@@ -81,7 +74,6 @@ export default {
   },
   data: function () {
     return {
-      iscalled: false,
       days: [
         { label: "M", value: "monday" },
         { label: "T", value: "tuesday" },
@@ -91,7 +83,6 @@ export default {
         { label: "S", value: "saturday" },
         { label: "SN", value: "sunday" },
       ],
-      confirmstatus: "",
       status: 1,
       restaurantName: "",
       categories: [],
@@ -126,18 +117,11 @@ export default {
         userId: this.userInfo.userId,
         _id: this.useRestaurantInfo.restaurant._id,
       };
-      console.log("-- new restaurant");
-      console.log(updateRestaurantObj);
-
       try {
         const is_updated = await EditRestaurnt(updateRestaurantObj);
-        console.log("-- is updated");
-        console.log(is_updated);
-        this.iscalled = false;
         if (is_updated.success && is_updated.data.result.status == 3) {
-          this.iscalled = true;
-          this.confirmstatus = "Updated a Restaurant successfully!";
-          this.status = 1;
+          this.useRestaurantInfo.setStoreConfirm(true);
+          this.useRestaurantInfo.setCreateConfirm(false);
           setTimeout(() => {
             this.router.push({ name: "RestaurantProfileView" });
           }, 2000);

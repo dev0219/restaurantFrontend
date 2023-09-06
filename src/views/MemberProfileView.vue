@@ -1,6 +1,7 @@
 <template>
   <div class="member-profile-elements">
     <MemberHeaderComponent />
+    <StoreConfirmComponent v-if="is_reserved" :Storecontent="Storecontent" />
     <DeleteConfirmComponent
       v-if="is_deleting"
       :content="deletecontent"
@@ -27,7 +28,9 @@ import MemberHeaderComponent from "@/components/MemberHeaderComponent.vue";
 import ReservedRestaurantComponent from "@/components/ReservedRestaurantComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import DeleteConfirmComponent from "@/components/DeleteConfirmComponent.vue";
+import StoreConfirmComponent from "@/components/StoreConfirmComponent.vue";
 import { getUserReservations, deleteReservation } from "@/api/reservation";
+import { useRestaurantStore } from "@/store/restaurant";
 import { useUserStore } from "@/store/user";
 import { useRouter } from "vue-router";
 
@@ -39,18 +42,22 @@ export default {
     ReservedRestaurantComponent,
     FooterComponent,
     DeleteConfirmComponent,
+    StoreConfirmComponent,
   },
   setup() {
     const userInfo = useUserStore();
     const router = useRouter();
-    return { userInfo, router };
+    const useRestaurantInfo = useRestaurantStore();
+    return { userInfo, router, useRestaurantInfo };
   },
   data: function () {
     return {
       is_deleting: false,
+      is_reserved: false,
       resevedRestaurants: [],
       deleting_reserve_id: "",
       deletecontent: "Are you deleting this reservation?",
+      Storecontent: "The restaurant was reserved successfully!",
     };
   },
   methods: {
@@ -82,6 +89,13 @@ export default {
   },
   created() {
     this.getAllRestaurants();
+    if (this.useRestaurantInfo.storConfirm) {
+      this.is_reserved = true;
+      setTimeout(() => {
+        this.is_reserved = false;
+        this.useRestaurantInfo.setStoreConfirm(false);
+      }, 3000);
+    }
   },
 };
 </script>

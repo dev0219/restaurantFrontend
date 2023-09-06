@@ -66,7 +66,7 @@ import InputTitleComponent from "@/components/InputTitleComponent.vue";
 import { useRestaurantStore } from "@/store/restaurant";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
-import { createReservation } from "@/api/reservation";
+import { createReservation, checkReservation } from "@/api/reservation";
 
 export default {
   name: "MemberReservationView",
@@ -124,32 +124,51 @@ export default {
         date: currentyear + "-" + this.month + "-" + this.date,
         seats: this.seats,
         userId: this.userInfo.userId,
+        day: this.day,
       };
       if (this.useRestaurantInfo.restaurant.days.includes(this.day)) {
-        this.status = 1;
-        this.confirmstatus =
-          "Please confirm. Book Date : " +
-          currentyear +
-          "-" +
-          this.month +
-          "-" +
-          this.date +
-          ", Seats are " +
-          this.seats +
-          ".";
-        const is_created_reservation = await createReservation(reservationObj);
-        if (is_created_reservation.data.result.status == 2) {
-          this.confirmstatus = "Reserved a restaurant successfully!";
-          setTimeout(() => {
-            this.router.push({ name: "MemberProfile" });
-          }, 2000);
+        const is_available_seat = await checkReservation(reservationObj);
+        if (is_available_seat.success) {
+          let availableSeats =
+            this.useRestaurantInfo.restaurant.seats -
+            is_available_seat.data.result.seats;
+
+          if (availableSeats < this.seats) {
+            this.status = 2;
+            this.confirmstatus =
+              currentyear +
+              "-" +
+              this.month +
+              "-" +
+              this.date +
+              ", " +
+              this.seats +
+              " Seats are not available." +
+              "Maximum Seating: " +
+              this.useRestaurantInfo.restaurant.seats +
+              " & Available Seats: " +
+              availableSeats +
+              ".";
+            this.isCalled = true;
+          } else {
+            this.isCalled = false;
+            const is_created_reservation = await createReservation(
+              reservationObj
+            );
+            if (is_created_reservation.data.result.status == 2) {
+              this.useRestaurantInfo.setStoreConfirm(true);
+              setTimeout(() => {
+                this.router.push({ name: "MemberProfile" });
+              }, 2000);
+            }
+          }
         }
       } else {
         this.status = 2;
         this.confirmstatus =
           "The restaurant is not opening for the seleted date. Please try with another date.";
+        this.isCalled = true;
       }
-      this.isCalled = true;
     },
     handleChoosedate(val) {
       this.date = val;
