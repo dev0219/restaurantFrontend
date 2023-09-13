@@ -86,7 +86,7 @@ export default {
         }
       } catch (error) {
         this.iscalled = false;
-        console.error("Error login user:", error);
+        console.log("Error login user:", error);
       }
     },
     getValue(event) {
