@@ -54,7 +54,11 @@ export default {
   },
   methods: {
     async getAllRestaurants() {
-      const allRestaurantLst = await getAllRestaurnts();
+      if (this.userInfo.userId == "") {
+        this.userInfo.setUserId(localStorage.getItem("userId"));
+      }
+      let userobject = { userId: this.userInfo.userId };
+      const allRestaurantLst = await getAllRestaurnts(userobject);
       console.log("----restaurants in member");
       console.log(allRestaurantLst);
       if (allRestaurantLst.data.results.results.length) {

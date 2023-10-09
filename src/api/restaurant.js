@@ -1,5 +1,5 @@
 // const apiUrl = "https://fluffy-garbanzo-g949pr65v763pwpj-3000.app.github.dev";
-const apiUrl = "http://localhost:3000";
+const apiUrl = "https://ominous-spork-w56w79746j52w97-3000.app.github.dev";
 
 // Function to get restaurant data
 export async function createRestaurnt(newObj) {
@@ -47,13 +47,14 @@ export async function getUserRestaurnts(userID) {
   return response.json();
 }
 
-export async function getAllRestaurnts() {
+export async function getAllRestaurnts(userID) {
   const response = await fetch(`${apiUrl}/api/restaurant/member/all`, {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json", // Specify the content type
       // You can add other headers here if needed, like authentication headers
     },
+    body: JSON.stringify(userID),
   });
   if (!response.ok) {
     throw new Error("Failed to get all restaurants for the member");

@@ -63,6 +63,11 @@ npm run test:unit
 npm run lint
 ```
 
+### Build project
+```
+npm run build
+```
+The created dist folder will be deployed on hosting server.
 ## Technologies Used
 - Vue.js
 - HTML

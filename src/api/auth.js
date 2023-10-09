@@ -1,6 +1,6 @@
 // const apiUrl = "https://fluffy-garbanzo-g949pr65v763pwpj-3000.app.github.dev";
-const apiUrl = "http://localhost:3000";
-
+const apiUrl = "https://ominous-spork-w56w79746j52w97-3000.app.github.dev";
+// const apiUrl = "http://localhost:3000";
 // Function to login user data
 export async function loginUser(username) {
   const response = await fetch(`${apiUrl}/api/auth/login`, {
